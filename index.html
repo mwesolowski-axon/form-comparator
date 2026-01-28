@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Comparator | Axon</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">
+      <img src="axon-logo.svg" alt="Axon">
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-title">Form Comparator</div>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+    <img class="light-icon" src="light-icon.svg" alt="Light mode">
+    <img class="dark-icon" src="dark-icon.svg" alt="Dark mode">
+  </button>
+</div>
+
+<div class="container">
+  <h1>Form Schema Comparator</h1>
+  <p class="subtitle">Compare JSON form schemas and see detailed differences</p>
+  
+  <div class="upload-section">
+    <div class="file-inputs">
+      <div class="file-group" id="group-a">
+        <label>File A (Base)</label>
+        <input type="file" id="file-a" accept=".json" onchange="handleFileSelect(this, 'a')">
+        <div class="file-name" id="name-a">No file selected</div>
+      </div>
+      <div class="file-group" id="group-b">
+        <label>File B (Compare)</label>
+        <input type="file" id="file-b" accept=".json" onchange="handleFileSelect(this, 'b')">
+        <div class="file-name" id="name-b">No file selected</div>
+      </div>
+    </div>
+    <button class="btn-compare" id="btn-compare" onclick="compareFiles()" disabled>Compare Files</button>
+  </div>
+
+  <div class="error-message" id="error-msg"></div>
+
+  <div class="results-section" id="results">
+    <div class="summary">
+      <div class="stat-card added">
+        <div class="stat-number" id="stat-added">0</div>
+        <div class="stat-label">Added in B</div>
+      </div>
+      <div class="stat-card removed">
+        <div class="stat-number" id="stat-removed">0</div>
+        <div class="stat-label">Removed from A</div>
+      </div>
+      <div class="stat-card changed">
+        <div class="stat-number" id="stat-changed">0</div>
+        <div class="stat-label">Changed</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input type="text" class="search-box" id="search" placeholder="Search differences..." onkeyup="applyFilters()">
+      <div class="filter-group">
+        <label>
+          <input type="checkbox" id="filter-added" checked onchange="applyFilters()">
+          <span>Added</span>
+        </label>
+        <label>
+          <input type="checkbox" id="filter-removed" checked onchange="applyFilters()">
+          <span>Removed</span>
+        </label>
+        <label>
+          <input type="checkbox" id="filter-changed" checked onchange="applyFilters()">
+          <span>Changed</span>
+        </label>
+      </div>
+      <button class="btn-csv" onclick="downloadCSV()">Download CSV</button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="sortable" onclick="sortTable(0)">Type</th>
+            <th class="sortable" onclick="sortTable(1)">Path</th>
+            <th class="sortable" onclick="sortTable(2)">Description</th>
+            <th id="th-a" title="">Value in A</th>
+            <th id="th-b" title="">Value in B</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  For Internal Use Only 
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
